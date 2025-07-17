@@ -1,0 +1,15 @@
+{
+  "name": "@yelaiii/prettier",
+  "private": false,
+  "version": "0.0.3",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "type": "module",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "peerDependencies": {
+    "prettier": "^3.6.2"
+  }
+}

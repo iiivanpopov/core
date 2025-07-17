@@ -1,0 +1,1 @@
+# 🔮 ESLINT CONFIG
