@@ -2,6 +2,7 @@ import antfu from '@antfu/eslint-config'
 import pluginNext from '@next/eslint-plugin-next'
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y'
 import pluginReact from 'eslint-plugin-react'
+import pluginReactRefresh from 'eslint-plugin-react-refresh'
 
 /** @type {import('@yelaiii/eslint').ESLint} */
 export const eslint = (
@@ -45,35 +46,49 @@ export const eslint = (
   }
 
   if (options.react) {
-    configs.unshift({
-      name: 'yelaiii/react',
-      plugins: {
-        'yelaiii-react': pluginReact,
-      },
-      rules: {
-        ...Object.entries(pluginReact.configs.recommended.rules).reduce(
-          (acc, [key, value]) => {
-            acc[key.replace('react', 'yelaiii-react')] = value
-            return acc
-          },
-          {}
-        ),
-        'yelaiii-react/function-component-definition': [
-          'error',
-          {
-            namedComponents: ['arrow-function'],
-            unnamedComponents: 'arrow-function',
-          },
-        ],
-        'yelaiii-react/prop-types': 'off',
-        'yelaiii-react/react-in-jsx-scope': 'off',
-      },
-      settings: {
-        react: {
-          version: 'detect',
+    configs.unshift(
+      {
+        name: 'yelaiii/react-refresh',
+        plugins: {
+          'yelaiii-react-refresh': pluginReactRefresh,
+        },
+        rules: {
+          'yelaiii-react-refresh/only-export-components': [
+            'warn',
+            { allowConstantExport: true },
+          ],
         },
       },
-    })
+      {
+        name: 'yelaiii/react',
+        plugins: {
+          'yelaiii-react': pluginReact,
+        },
+        rules: {
+          ...Object.entries(pluginReact.configs.recommended.rules).reduce(
+            (acc, [key, value]) => {
+              acc[key.replace('react', 'yelaiii-react')] = value
+              return acc
+            },
+            {}
+          ),
+          'yelaiii-react/function-component-definition': [
+            'error',
+            {
+              namedComponents: ['arrow-function'],
+              unnamedComponents: 'arrow-function',
+            },
+          ],
+          'yelaiii-react/prop-types': 'off',
+          'yelaiii-react/react-in-jsx-scope': 'off',
+        },
+        settings: {
+          react: {
+            version: 'detect',
+          },
+        },
+      }
+    )
   }
 
   return antfu(
