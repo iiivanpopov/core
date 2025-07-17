@@ -53,13 +53,6 @@ export const eslint = (
         'yelaiii-react-refresh': pluginReactRefresh
       },
       rules: {
-        ...Object.entries(pluginReact.configs.recommended.rules).reduce(
-          (acc, [key, value]) => {
-            acc[key.replace('react', 'yelaiii-react')] = value
-            return acc
-          },
-          {}
-        ),
         'yelaiii-react/function-component-definition': [
           'error',
           {
