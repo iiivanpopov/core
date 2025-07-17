@@ -1,0 +1,9 @@
+{
+  "name": "core",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@yelaiii/prettier": "^0.0.2"
+  },
+  "version": "0.0.1"
+}
