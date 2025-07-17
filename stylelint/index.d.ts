@@ -1,7 +1,6 @@
 declare module '@yelaiii/stylelint' {
-  export type Config = import('stylelint').Config
-  export type StyleLintParams = { sort?: boolean; overrides?: Partial<Config> }
-  export type StyleLint = (params: StyleLintParams) => Config
-  export type PlainRules = (rules: Record<string, any>[]) => Record<string, any>
+  export type StyleLint = (
+    overrides?: Partial<import('stylelint').Config>
+  ) => import('stylelint').Config
   export const stylelint: StyleLint
 }

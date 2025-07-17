@@ -1,24 +1,32 @@
 {
   "name": "@yelaiii/eslint",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "private": false,
   "license": "MIT",
+  "exports": {
+    ".": "./index.js"
+  },
+  "main": "index.js",
   "module": "index.js",
   "types": "index.d.ts",
   "files": [
-    "index.js",
-    "index.d.ts"
+    "index.d.ts",
+    "index.js"
   ],
   "peerDependencies": {
     "@eslint-react/eslint-plugin": "^1.52.3",
     "@next/eslint-plugin-next": "^15.4.1",
+    "eslint": "^9.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "eslint": "^9.31.0"
+    "eslint-plugin-react-refresh": "^0.4.20"
   },
   "dependencies": {
-    "@antfu/eslint-config": "^4.17.0"
+    "@antfu/eslint-config": "^4.17.0",
+    "eslint-plugin-perfectionist": "^4.15.0"
+  },
+  "devDependencies": {
+    "@yelaiii/prettier": "^0.0.4"
   }
 }

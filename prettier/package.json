@@ -1,14 +1,18 @@
 {
   "name": "@yelaiii/prettier",
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "module": "index.js",
   "types": "index.d.ts",
+  "main": "index.js",
   "type": "module",
   "files": [
     "index.js",
     "index.d.ts"
   ],
+  "exports": {
+    ".": "./index.js"
+  },
   "peerDependencies": {
     "prettier": "^3.6.2"
   }

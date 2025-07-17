@@ -1,24 +1,22 @@
 {
   "name": "@yelaiii/stylelint",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.4",
   "module": "index.js",
   "types": "index.d.ts",
+  "main": "index.js",
   "type": "module",
   "files": [
     "index.js",
     "index.d.ts",
     "config"
   ],
-  "scripts": {
-    "test": "vitest"
+  "exports": {
+    ".": "./index.js"
   },
   "peerDependencies": {
     "stylelint": "^16.21.1",
     "stylelint-config-standard": "^38.0.0",
     "stylelint-order": "^7.0.0"
-  },
-  "devDependencies": {
-    "vitest": "^3.2.4"
   }
 }

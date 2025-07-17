@@ -1,6 +1,7 @@
 import antfu from '@antfu/eslint-config'
 import pluginNext from '@next/eslint-plugin-next'
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y'
+import pluginReact from 'eslint-plugin-react'
 import pluginReactRefresh from 'eslint-plugin-react-refresh'
 
 /** @type {import('@yelaiii/eslint').ESLint} */
@@ -8,29 +9,11 @@ export const eslint = (
   { jsxA11y = false, next = false, ...options } = {},
   ...configs
 ) => {
-  if (jsxA11y) {
-    configs.unshift({
-      name: 'yelaiii/jsx-a11y',
-      plugins: {
-        'yelaiii-jsx-a11y': pluginJsxA11y,
-      },
-      rules: {
-        ...Object.entries(pluginJsxA11y.flatConfigs.recommended.rules).reduce(
-          (acc, [key, value]) => {
-            acc[key.replace('jsx-a11y', 'yelaiii-jsx-a11y')] = value
-            return acc
-          },
-          {}
-        ),
-      },
-    })
-  }
-
   if (next) {
     configs.unshift({
       name: 'yelaiii/next',
       plugins: {
-        'yelaiii-next': pluginNext,
+        'yelaiii-next': pluginNext
       },
       rules: {
         ...Object.entries({ ...pluginNext.configs.recommended.rules }).reduce(
@@ -39,70 +22,81 @@ export const eslint = (
             return acc
           },
           {}
-        ),
+        )
+      }
+    })
+  }
+
+  if (jsxA11y) {
+    configs.unshift({
+      name: 'yelaiii/jsx-a11y',
+      plugins: {
+        'yelaiii-jsx-a11y': pluginJsxA11y
       },
+      rules: {
+        ...Object.entries(pluginJsxA11y.flatConfigs.recommended.rules).reduce(
+          (acc, [key, value]) => {
+            acc[key.replace('jsx-a11y', 'yelaiii-jsx-a11y')] = value
+            return acc
+          },
+          {}
+        )
+      }
     })
   }
 
   if (options.react) {
-    configs.unshift(
-      {
-        name: 'yelaiii/react-refresh',
-        plugins: {
-          'yelaiii-react-refresh': pluginReactRefresh,
-        },
-        rules: {
-          'yelaiii-react-refresh/only-export-components': [
-            'warn',
-            { allowConstantExport: true },
-          ],
-        },
+    configs.unshift({
+      name: 'yelaiii/react',
+      plugins: {
+        'yelaiii-react': pluginReact,
+        'yelaiii-react-refresh': pluginReactRefresh
       },
-      {
-        name: 'yelaiii/react-overrides',
-        rules: {
-          'react/function-component-definition': [
-            'error',
-            {
-              namedComponents: ['arrow-function'],
-              unnamedComponents: 'arrow-function',
-            },
-          ],
-          'react/prop-types': 'off',
-          'react/react-in-jsx-scope': 'off',
-        },
-        settings: {
-          react: {
-            version: 'detect',
+      rules: {
+        ...Object.entries(pluginReact.configs.recommended.rules).reduce(
+          (acc, [key, value]) => {
+            acc[key.replace('react', 'yelaiii-react')] = value
+            return acc
           },
-        },
+          {}
+        ),
+        'yelaiii-react/function-component-definition': [
+          'error',
+          {
+            namedComponents: ['arrow-function'],
+            unnamedComponents: 'arrow-function'
+          }
+        ],
+        'yelaiii-react/prop-types': 'off',
+        'yelaiii-react/react-in-jsx-scope': 'off',
+        'yelaiii-react-refresh/only-export-components': [
+          'warn',
+          { allowConstantExport: true }
+        ]
+      },
+      settings: {
+        react: {
+          version: 'detect'
+        }
       }
-    )
+    })
   }
 
   return antfu(
-    {
-      stylistic: false,
-      ...options,
-    },
+    { stylistic: false, ...options },
     {
       name: 'yelaiii/rewrite',
       rules: {
-        // TypeScript rules
-        'ts/consistent-type-definitions': ['error', 'interface'], // Prefer interfaces over types
-        '@typescript-eslint/no-explicit-any': 'off', // Sometimes y'all need it
-
-        // React rules
-        'react-hooks/exhaustive-deps': 'off', // It's stupid
-
-        // Stylistic rules
-        curly: ['error', 'multi-or-nest'], // Prefer compact if statements
+        'ts/consistent-type-definitions': ['error', 'interface'],
+        '@typescript-eslint/no-explicit-any': 'off',
+        'react-hooks/exhaustive-deps': 'off',
+        'curly': ['error', 'multi-or-nest'],
         'antfu/if-newline': 'off',
-        'antfu/top-level-function': 'off', // Prefer arrow functions
-
-        // ESLint comments
-        'eslint-comments/no-unlimited-disable': 'off', // TanStack Router routeTree
-      },
+        'antfu/top-level-function': 'off',
+        'eslint-comments/no-unlimited-disable': 'off',
+        'no-console': 'warn',
+        'test/prefer-lowercase-title': 'off'
+      }
     },
     {
       name: 'yelaiii/sort',
@@ -111,8 +105,8 @@ export const eslint = (
           'error',
           {
             order: 'asc',
-            type: 'alphabetical',
-          },
+            type: 'alphabetical'
+          }
         ],
         'perfectionist/sort-imports': [
           'error',
@@ -127,39 +121,39 @@ export const eslint = (
               'object',
               'style',
               'side-effect-style',
-              'unknown',
+              'unknown'
             ],
             internalPattern: ['^~/.*', '^@/.*'],
             newlinesBetween: 'always',
             order: 'asc',
-            type: 'natural',
-          },
+            type: 'natural'
+          }
         ],
         'perfectionist/sort-interfaces': [
           'error',
           {
             groups: ['unknown', 'method', 'multiline'],
             order: 'asc',
-            type: 'alphabetical',
-          },
+            type: 'alphabetical'
+          }
         ],
         'perfectionist/sort-jsx-props': [
           'error',
           {
             customGroups: {
               callback: 'on*',
-              reserved: ['key', 'ref'],
+              reserved: ['key', 'ref']
             },
             groups: [
               'shorthand',
               'reserved',
               'multiline',
               'unknown',
-              'callback',
+              'callback'
             ],
             order: 'asc',
-            type: 'alphabetical',
-          },
+            type: 'alphabetical'
+          }
         ],
         'perfectionist/sort-union-types': [
           'error',
@@ -176,17 +170,17 @@ export const eslint = (
               'operator',
               'tuple',
               'union',
-              'nullish',
+              'nullish'
             ],
             order: 'asc',
             specialCharacters: 'keep',
-            type: 'alphabetical',
-          },
-        ],
-      },
+            type: 'alphabetical'
+          }
+        ]
+      }
     },
     {
-      ignores: ['**/generated', '**/dist', '**/build'],
+      ignores: ['**/generated', '**/dist', '**/build']
     },
     ...configs
   )
