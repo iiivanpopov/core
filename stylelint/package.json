@@ -1,7 +1,7 @@
 {
   "name": "@yelaiii/stylelint",
   "private": false,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "module": "index.js",
   "types": "index.d.ts",
   "main": "index.js",
@@ -15,8 +15,11 @@
     ".": "./index.js"
   },
   "peerDependencies": {
-    "stylelint": "^16.21.1",
+    "stylelint": "^16.22.0",
     "stylelint-config-standard": "^38.0.0",
     "stylelint-order": "^7.0.0"
+  },
+  "devDependencies": {
+    "@yelaiii/prettier": "^0.0.4"
   }
 }
