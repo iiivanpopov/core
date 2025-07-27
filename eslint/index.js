@@ -28,38 +28,24 @@ export const eslint = ({ ...options } = {}, ...configs) => {
       }
     },
     {
-      files: ['src/**/*.{ts,tsx}'],
-      ignores: ['**/index.{ts,tsx}'],
+      files: ['src/**/*.tsx'],
+      ignores: ['**/main.tsx'],
       rules: {
-        '@eslint-react/naming-convention/filename': ['warn', 'PascalCase']
+        'react-naming-convention/filename': ['warn', 'PascalCase']
       }
     },
     {
-      files: ['src/**/hooks/**/use*.{ts,tsx}'],
+      files: ['src/**/utils/**/*.ts', 'src/**/helpers/**/*.ts'],
       rules: {
-        '@eslint-react/naming-convention/filename': ['warn', 'camelCase']
-      }
-    },
-    {
-      files: ['src/**/utils/**/*.{ts,tsx}', 'src/**/helpers/**/*.{ts,tsx}'],
-      rules: {
-        '@eslint-react/naming-convention/filename': ['warn', 'camelCase']
-      }
-    },
-    {
-      files: ['src/**/constants/**/*.{ts,tsx}', 'src/**/*.constants.{ts,tsx}'],
-      rules: {
-        '@eslint-react/naming-convention/filename': [
-          'warn',
-          'SCREAMING_SNAKE_CASE'
-        ]
+        'react-naming-convention/filename': ['warn', 'camelCase']
       }
     },
     {
       name: 'yelaiii/typescript-enhancements',
       languageOptions: {
         parserOptions: {
-          project: true
+          project: 'tsconfig.app.json',
+          tsconfigRootDir: process.cwd()
         }
       },
       files: ['src/**/*.{ts,tsx}'],
@@ -141,7 +127,7 @@ export const eslint = ({ ...options } = {}, ...configs) => {
       rules: {
         'ts/consistent-type-definitions': ['error', 'interface'],
         '@typescript-eslint/no-explicit-any': 'warn',
-        'react-hooks/exhaustive-deps': 'warn',
+        'react-hooks/exhaustive-deps': 'off',
         'curly': ['error', 'multi-or-nest'],
         'antfu/if-newline': 'off',
         'antfu/top-level-function': 'off',
@@ -149,9 +135,6 @@ export const eslint = ({ ...options } = {}, ...configs) => {
         'no-console': 'warn',
         'test/prefer-lowercase-title': 'off',
         'node/prefer-global/process': 'off',
-        'complexity': ['warn', 12],
-        'max-depth': ['warn', 4],
-        'max-lines-per-function': ['warn', 80],
         'eqeqeq': ['error', 'always', { null: 'ignore' }],
         'no-nested-ternary': 'warn'
       }
