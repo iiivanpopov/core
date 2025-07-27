@@ -1,6 +1,5 @@
 import antfu from '@antfu/eslint-config'
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y'
-import pluginReact from 'eslint-plugin-react'
 
 /** @type {import('@yelaiii/eslint').ESLint} */
 export const eslint = ({ ...options } = {}, ...configs) => {
@@ -14,42 +13,23 @@ export const eslint = ({ ...options } = {}, ...configs) => {
             'warn',
             { allowConstantExport: true }
           ],
-          'react-naming-convention/component-name': [
-            'error',
-            {
-              rule: 'PascalCase'
-            }
-          ],
-          'react-naming-convention/context-name': 'error',
-          'react-naming-convention/use-state': 'error',
-          'react/jsx-no-bind': [
-            'warn',
-            {
-              ignoreRefs: true,
-              allowArrowFunctions: true,
-              allowFunctions: false,
-              allowBind: false
-            }
-          ],
-          'react/jsx-no-leaked-render': 'error',
           'react/no-array-index-key': 'warn'
         }
       },
       ...options
     },
     {
+      name: 'yelaiii/jsx-a11y',
       plugins: {
         'jsx-a11y': pluginJsxA11y
       },
       rules: {
-        ...pluginJsxA11y.flatConfigs.recommended.rules,
-        'jsx-a11y/no-aria-hidden-on-focusable': 'error',
-        'jsx-a11y/prefer-tag-over-role': 'warn'
+        ...pluginJsxA11y.flatConfigs.recommended.rules
       }
     },
     {
       files: ['src/**/*.{ts,tsx}'],
-      ignore: ['**/index.{ts,tsx}'],
+      ignores: ['**/index.{ts,tsx}'],
       rules: {
         '@eslint-react/naming-convention/filename': ['warn', 'PascalCase']
       }
@@ -76,47 +56,63 @@ export const eslint = ({ ...options } = {}, ...configs) => {
       }
     },
     {
-      plugins: {
-        '@yelaiii/react': pluginReact
-      },
-      rules: {
-        '@yelaiii/react/function-component-definition': [
-          'error',
-          {
-            namedComponents: 'arrow-function',
-            unnamedComponents: 'arrow-function'
-          }
-        ]
-      }
-    },
-    {
       name: 'yelaiii/typescript-enhancements',
       languageOptions: {
         parserOptions: {
           project: true
         }
       },
-      files: ['**/*.{ts,tsx}'],
+      files: ['src/**/*.{ts,tsx}'],
+      ignores: ['**/*.d.ts', '**/*.config.*', '**/node_modules/**'],
       rules: {
         '@typescript-eslint/prefer-nullish-coalescing': 'error',
         '@typescript-eslint/prefer-optional-chain': 'error',
         '@typescript-eslint/no-unnecessary-condition': 'warn',
         '@typescript-eslint/prefer-readonly': 'warn',
         '@typescript-eslint/prefer-readonly-parameter-types': 'off',
-        '@typescript-eslint/explicit-member-accessibility': [
-          'error',
-          {
-            accessibility: 'explicit',
-            overrides: {
-              constructors: 'no-public'
-            }
-          }
-        ],
         '@typescript-eslint/no-explicit-any': 'error',
         '@typescript-eslint/no-unsafe-assignment': 'warn',
         '@typescript-eslint/no-unsafe-call': 'warn',
         '@typescript-eslint/no-unsafe-member-access': 'warn',
-        '@typescript-eslint/no-unsafe-return': 'warn'
+        '@typescript-eslint/no-unsafe-return': 'warn',
+        '@typescript-eslint/consistent-type-imports': [
+          'error',
+          {
+            prefer: 'type-imports',
+            disallowTypeAnnotations: false
+          }
+        ],
+        '@typescript-eslint/consistent-type-assertions': [
+          'error',
+          {
+            assertionStyle: 'as',
+            objectLiteralTypeAssertions: 'allow'
+          }
+        ]
+      }
+    },
+    {
+      name: 'yelaiii/typescript-basic',
+      files: ['**/*.{ts,tsx}'],
+      rules: {
+        '@typescript-eslint/no-unused-vars': [
+          'error',
+          {
+            argsIgnorePattern: '^_',
+            varsIgnorePattern: '^_'
+          }
+        ],
+        '@typescript-eslint/prefer-as-const': 'error',
+        '@typescript-eslint/no-inferrable-types': 'error',
+        '@typescript-eslint/ban-ts-comment': [
+          'error',
+          {
+            'ts-expect-error': 'allow-with-description',
+            'ts-ignore': false,
+            'ts-nocheck': false,
+            'ts-check': false
+          }
+        ]
       }
     },
     {
@@ -135,7 +131,9 @@ export const eslint = ({ ...options } = {}, ...configs) => {
           {
             enforceForRenamedProperties: false
           }
-        ]
+        ],
+        'prefer-template': 'error',
+        'no-useless-concat': 'error'
       }
     },
     {
@@ -151,8 +149,11 @@ export const eslint = ({ ...options } = {}, ...configs) => {
         'no-console': 'warn',
         'test/prefer-lowercase-title': 'off',
         'node/prefer-global/process': 'off',
-        'complexity': ['warn', 10],
-        'max-depth': ['warn', 4]
+        'complexity': ['warn', 12],
+        'max-depth': ['warn', 4],
+        'max-lines-per-function': ['warn', 80],
+        'eqeqeq': ['error', 'always', { null: 'ignore' }],
+        'no-nested-ternary': 'warn'
       }
     },
     {
@@ -260,14 +261,22 @@ export const eslint = ({ ...options } = {}, ...configs) => {
         '@typescript-eslint/no-explicit-any': 'off',
         'no-magic-numbers': 'off',
         'max-lines-per-function': 'off',
-        'complexity': 'off'
+        'complexity': 'off',
+        'no-console': 'off'
       }
     },
     {
-      files: ['*.config.{js,ts}', 'vite.config.*', 'vitest.config.*'],
+      files: [
+        '*.config.{js,ts}',
+        'vite.config.*',
+        'vitest.config.*',
+        '**/*.d.ts'
+      ],
       rules: {
         'no-console': 'off',
-        '@typescript-eslint/no-explicit-any': 'off'
+        '@typescript-eslint/no-explicit-any': 'off',
+        'complexity': 'off',
+        'max-lines-per-function': 'off'
       }
     },
     {
@@ -279,7 +288,10 @@ export const eslint = ({ ...options } = {}, ...configs) => {
         '**/.next',
         '**/node_modules',
         '**/*.min.js',
-        '**/public/sw.js'
+        '**/public/sw.js',
+        '**/.nuxt',
+        '**/.output',
+        '**/.vitepress/cache'
       ]
     },
     ...configs
