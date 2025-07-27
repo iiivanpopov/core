@@ -1,32 +1,13 @@
 import antfu from '@antfu/eslint-config'
-import pluginNext from '@next/eslint-plugin-next'
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y'
 import pluginReact from 'eslint-plugin-react'
 import pluginReactRefresh from 'eslint-plugin-react-refresh'
 
 /** @type {import('@yelaiii/eslint').ESLint} */
 export const eslint = (
-  { jsxA11y = false, next = false, ...options } = {},
+  { jsxA11y = false, ...options } = {},
   ...configs
 ) => {
-  if (next) {
-    configs.unshift({
-      name: 'yelaiii/next',
-      plugins: {
-        'yelaiii-next': pluginNext
-      },
-      rules: {
-        ...Object.entries({ ...pluginNext.configs.recommended.rules }).reduce(
-          (acc, [key, value]) => {
-            acc[key.replace('@next/next', 'yelaiii-next')] = value
-            return acc
-          },
-          {}
-        )
-      }
-    })
-  }
-
   if (jsxA11y) {
     configs.unshift({
       name: 'yelaiii/jsx-a11y',
