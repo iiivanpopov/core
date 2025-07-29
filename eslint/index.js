@@ -53,14 +53,9 @@ export const eslint = ({ ...options } = {}, ...configs) => {
       rules: {
         '@typescript-eslint/prefer-nullish-coalescing': 'error',
         '@typescript-eslint/prefer-optional-chain': 'error',
-        '@typescript-eslint/no-unnecessary-condition': 'warn',
         '@typescript-eslint/prefer-readonly': 'warn',
         '@typescript-eslint/prefer-readonly-parameter-types': 'off',
         '@typescript-eslint/no-explicit-any': 'error',
-        '@typescript-eslint/no-unsafe-assignment': 'warn',
-        '@typescript-eslint/no-unsafe-call': 'warn',
-        '@typescript-eslint/no-unsafe-member-access': 'warn',
-        '@typescript-eslint/no-unsafe-return': 'warn',
         '@typescript-eslint/consistent-type-imports': [
           'error',
           {
