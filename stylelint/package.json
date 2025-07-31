@@ -1,25 +1,29 @@
 {
   "name": "@yelaiii/stylelint",
-  "private": false,
-  "version": "0.0.5",
-  "module": "index.js",
-  "types": "index.d.ts",
-  "main": "index.js",
   "type": "module",
-  "files": [
-    "index.js",
-    "index.d.ts",
-    "config"
-  ],
+  "version": "0.0.6",
+  "private": false,
   "exports": {
     ".": "./index.js"
   },
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "config",
+    "index.d.ts",
+    "index.js"
+  ],
+  "peerDependencies": {
+    "stylelint": "^16.23.0"
+  },
   "dependencies": {
-    "stylelint": "^16.22.0",
-    "stylelint-config-standard": "^38.0.0",
+    "stylelint-config-standard": "^39.0.0",
     "stylelint-order": "^7.0.0"
   },
   "devDependencies": {
-    "@yelaiii/prettier": "^0.0.4"
+    "@yelaiii/eslint": "^0.0.22",
+    "@yelaiii/prettier": "^0.0.4",
+    "eslint": "^9.32.0"
   }
 }

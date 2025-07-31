@@ -13,10 +13,10 @@ export const stylelint = (overrides = {}) => ({
       'always',
       {
         except: ['first-nested'],
-        ignore: ['after-comment', 'after-declaration'],
-      },
-    ],
+        ignore: ['after-comment', 'after-declaration']
+      }
+    ]
   },
   ignoreFiles: ['**/dist/*.css'],
-  ...overrides,
+  ...overrides
 })

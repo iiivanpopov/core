@@ -20,6 +20,14 @@ Configuration packages for unifying code style across projects.
 bun add -d @yelaiii/eslint eslint
 ```
 
+#### React installation
+
+```bash
+bun add -d @yelaiii/eslint eslint eslint-plugin-jsx-a11y
+```
+
+Antfu's config will install missing deps
+
 ---
 
 ## Prettier Config

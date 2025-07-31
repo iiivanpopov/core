@@ -1,4 +1,4 @@
-import { eslint } from './index.js'
+import { eslint } from '@yelaiii/eslint'
 export default eslint({
   typescript: true
 })

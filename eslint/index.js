@@ -1,23 +1,8 @@
-import antfu from '@antfu/eslint-config'
+import antfu, { sortPackageJson, sortTsconfig } from '@antfu/eslint-config'
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y'
 
-/** @type {import('@yelaiii/eslint').ESLint} */
-export const eslint = ({ ...options } = {}, ...configs) => {
-  return antfu(
-    {
-      stylistic: false,
-      typescript: true,
-      react: {
-        overrides: {
-          'react-refresh/only-export-components': [
-            'warn',
-            { allowConstantExport: true }
-          ],
-          'react/no-array-index-key': 'warn'
-        }
-      },
-      ...options
-    },
+const configGroups = {
+  react: [
     {
       name: 'yelaiii/jsx-a11y',
       plugins: {
@@ -31,15 +16,19 @@ export const eslint = ({ ...options } = {}, ...configs) => {
       files: ['src/**/*.tsx'],
       ignores: ['**/main.tsx'],
       rules: {
-        'react-naming-convention/filename': ['warn', 'PascalCase']
+        'react-naming-convention/filename': ['error', 'PascalCase'],
+        'react-hooks/exhaustive-deps': 'off'
       }
     },
     {
       files: ['src/**/utils/**/*.ts', 'src/**/helpers/**/*.ts'],
       rules: {
-        'react-naming-convention/filename': ['warn', 'camelCase']
+        'react-naming-convention/filename': ['error', 'camelCase']
       }
-    },
+    }
+  ],
+
+  typescript: [
     {
       name: 'yelaiii/typescript-enhancements',
       languageOptions: {
@@ -53,9 +42,9 @@ export const eslint = ({ ...options } = {}, ...configs) => {
       rules: {
         '@typescript-eslint/prefer-nullish-coalescing': 'error',
         '@typescript-eslint/prefer-optional-chain': 'error',
-        '@typescript-eslint/prefer-readonly': 'warn',
+        '@typescript-eslint/prefer-readonly': 'error',
         '@typescript-eslint/prefer-readonly-parameter-types': 'off',
-        '@typescript-eslint/no-explicit-any': 'error',
+        '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/consistent-type-imports': [
           'error',
           {
@@ -69,7 +58,8 @@ export const eslint = ({ ...options } = {}, ...configs) => {
             assertionStyle: 'as',
             objectLiteralTypeAssertions: 'allow'
           }
-        ]
+        ],
+        'ts/consistent-type-definitions': ['error', 'interface']
       }
     },
     {
@@ -83,6 +73,7 @@ export const eslint = ({ ...options } = {}, ...configs) => {
             varsIgnorePattern: '^_'
           }
         ],
+        'no-unused-vars': 'off',
         '@typescript-eslint/prefer-as-const': 'error',
         '@typescript-eslint/no-inferrable-types': 'error',
         '@typescript-eslint/ban-ts-comment': [
@@ -95,7 +86,10 @@ export const eslint = ({ ...options } = {}, ...configs) => {
           }
         ]
       }
-    },
+    }
+  ],
+
+  performance: [
     {
       name: 'yelaiii/performance',
       rules: {
@@ -116,24 +110,10 @@ export const eslint = ({ ...options } = {}, ...configs) => {
         'prefer-template': 'error',
         'no-useless-concat': 'error'
       }
-    },
-    {
-      name: 'yelaiii/rewrite',
-      rules: {
-        'ts/consistent-type-definitions': ['error', 'interface'],
-        '@typescript-eslint/no-explicit-any': 'warn',
-        'react-hooks/exhaustive-deps': 'off',
-        'curly': ['error', 'multi-or-nest'],
-        'antfu/if-newline': 'off',
-        'antfu/top-level-function': 'off',
-        'eslint-comments/no-unlimited-disable': 'off',
-        'no-console': 'warn',
-        'test/prefer-lowercase-title': 'off',
-        'node/prefer-global/process': 'off',
-        'eqeqeq': ['error', 'always', { null: 'ignore' }],
-        'no-nested-ternary': 'warn'
-      }
-    },
+    }
+  ],
+
+  sorting: [
     {
       name: 'yelaiii/sort',
       rules: {
@@ -232,31 +212,27 @@ export const eslint = ({ ...options } = {}, ...configs) => {
           }
         ]
       }
-    },
+    }
+  ],
+
+  base: [
     {
-      files: ['**/*.{test,spec}.{ts,tsx}', '**/__tests__/**/*.{ts,tsx}'],
+      name: 'yelaiii/base-rules',
       rules: {
-        '@typescript-eslint/no-explicit-any': 'off',
-        'no-magic-numbers': 'off',
-        'max-lines-per-function': 'off',
-        'complexity': 'off',
-        'no-console': 'off'
-      }
-    },
-    {
-      files: [
-        '*.config.{js,ts}',
-        'vite.config.*',
-        'vitest.config.*',
-        '**/*.d.ts'
-      ],
-      rules: {
+        'curly': ['error', 'multi-or-nest'],
+        'antfu/if-newline': 'off',
+        'antfu/top-level-function': 'off',
+        'eslint-comments/no-unlimited-disable': 'off',
         'no-console': 'off',
-        '@typescript-eslint/no-explicit-any': 'off',
-        'complexity': 'off',
-        'max-lines-per-function': 'off'
+        'test/prefer-lowercase-title': 'off',
+        'node/prefer-global/process': 'off',
+        'eqeqeq': ['error', 'always', { null: 'ignore' }],
+        'no-nested-ternary': 'error'
       }
-    },
+    }
+  ],
+
+  ignores: [
     {
       ignores: [
         '**/generated',
@@ -271,7 +247,51 @@ export const eslint = ({ ...options } = {}, ...configs) => {
         '**/.output',
         '**/.vitepress/cache'
       ]
+    }
+  ]
+}
+
+/** @type {import('@yelaiii/eslint').ESLint} */
+export const eslint = (options = {}, ...userConfigs) => {
+  const {
+    react = false,
+    typescript = false,
+    performance = true,
+    ignores = true,
+    sorting = true,
+    ...antfuOptions
+  } = options
+
+  const activeConfigs = []
+
+  activeConfigs.push(...configGroups.base)
+
+  if (react) activeConfigs.push(...configGroups.react)
+  if (typescript) activeConfigs.push(...configGroups.typescript)
+  if (performance) activeConfigs.push(...configGroups.performance)
+  if (sorting) activeConfigs.push(...configGroups.sorting)
+  if (ignores) activeConfigs.push(...configGroups.ignores)
+
+  return antfu(
+    {
+      stylistic: false,
+      typescript,
+      react: react
+        ? {
+            overrides: {
+              'react-refresh/only-export-components': [
+                'error',
+                { allowConstantExport: true }
+              ],
+              'react/no-array-index-key': 'error'
+            }
+          }
+        : false,
+      ...antfuOptions
     },
-    ...configs
+    ...activeConfigs,
+    sortPackageJson(),
+    sortTsconfig(),
+    ...userConfigs
   )
 }

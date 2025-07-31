@@ -8,105 +8,105 @@ export const orderRules = [
   {
     type: 'at-rule',
     name: 'mixin',
-    hasBlock: true,
+    hasBlock: true
   },
   {
     type: 'at-rule',
     name: 'function',
-    hasBlock: true,
+    hasBlock: true
   },
 
   // Sass-specific Directives (Usage)
   {
     type: 'at-rule',
     name: 'include',
-    hasBlock: false,
+    hasBlock: false
   },
   {
     type: 'at-rule',
     name: 'extend',
-    hasBlock: false,
+    hasBlock: false
   },
 
   // Sass-specific Control Directives
   {
     type: 'at-rule',
     name: 'if',
-    hasBlock: true,
+    hasBlock: true
   },
   {
     type: 'at-rule',
     name: 'for',
-    hasBlock: true,
+    hasBlock: true
   },
   {
     type: 'at-rule',
     name: 'each',
-    hasBlock: true,
+    hasBlock: true
   },
   {
     type: 'at-rule',
     name: 'while',
-    hasBlock: true,
+    hasBlock: true
   },
 
   // CSS At-rules (Global Definitions)
   {
     type: 'at-rule',
     name: 'font-face',
-    hasBlock: true,
+    hasBlock: true
   },
   {
     type: 'at-rule',
     name: 'font-feature-values',
-    hasBlock: true,
+    hasBlock: true
   },
   {
     type: 'at-rule',
     name: 'counter-style',
-    hasBlock: true,
+    hasBlock: true
   },
   {
     type: 'at-rule',
     name: 'property',
-    hasBlock: true,
+    hasBlock: true
   },
 
   // CSS At-rules (Queries and Layers)
   {
     type: 'at-rule',
     name: 'supports',
-    hasBlock: true,
+    hasBlock: true
   },
   {
     type: 'at-rule',
     name: 'container',
-    hasBlock: true,
+    hasBlock: true
   },
   {
     type: 'at-rule',
     name: 'layer',
-    hasBlock: true,
+    hasBlock: true
   },
   {
     type: 'at-rule',
     name: 'media',
-    hasBlock: true,
+    hasBlock: true
   },
 
   // CSS At-rules (Animations and Page)
   {
     type: 'at-rule',
     name: 'keyframes',
-    hasBlock: true,
+    hasBlock: true
   },
   {
     type: 'at-rule',
     name: 'page',
-    hasBlock: true,
+    hasBlock: true
   },
 
   // CSS Declarations and Rules
   'declarations',
-  'rules',
+  'rules'
 ]
