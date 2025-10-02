@@ -17,6 +17,13 @@ export const stylelint = (overrides = {}) => ({
       }
     ]
   },
-  ignoreFiles: ['**/dist/*.css'],
+  ignoreFiles: [
+    '**/dist/**/*.css',
+    '**/build/**/*.css',
+    '**/.output/**/*.css',
+    '**/.next/**/*.css',
+    '**/.nuxt/**/*.css',
+    '**/.vitepress/cache/**/*.css'
+  ],
   ...overrides
 })

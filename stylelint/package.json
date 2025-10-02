@@ -3,6 +3,8 @@
   "type": "module",
   "version": "0.0.6",
   "private": false,
+  "description": "Sharable Stylelint config with property and rule ordering",
+  "sideEffects": false,
   "exports": {
     ".": "./index.js"
   },
@@ -12,10 +14,14 @@
   "files": [
     "config",
     "index.d.ts",
-    "index.js"
+    "index.js",
+    "stylelint.config.js"
   ],
+  "engines": {
+    "node": ">=18.18"
+  },
   "peerDependencies": {
-    "stylelint": "^16.23.0"
+    "stylelint": "^16.24.0"
   },
   "dependencies": {
     "stylelint-config-standard": "^39.0.0",
@@ -24,6 +30,7 @@
   "devDependencies": {
     "@yelaiii/eslint": "^0.0.22",
     "@yelaiii/prettier": "^0.0.4",
-    "eslint": "^9.32.0"
+    "eslint": "^9.36.0",
+    "prettier": "^3.6.2"
   }
 }
