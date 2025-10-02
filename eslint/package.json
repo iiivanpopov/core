@@ -3,7 +3,9 @@
   "type": "module",
   "version": "0.0.22",
   "private": false,
+  "description": "Sharable ESLint built on @antfu/eslint-config",
   "license": "MIT",
+  "sideEffects": false,
   "exports": {
     ".": "./index.js"
   },
@@ -11,18 +13,28 @@
   "module": "index.js",
   "types": "index.d.ts",
   "files": [
+    "eslint.config.js",
     "index.d.ts",
     "index.js"
   ],
+  "engines": {
+    "node": ">=18.18"
+  },
   "peerDependencies": {
-    "eslint": "^9.32.0",
+    "eslint": "^9.36.0",
     "eslint-plugin-jsx-a11y": "^6.10.2"
   },
+  "peerDependenciesMeta": {
+    "eslint-plugin-jsx-a11y": {
+      "optional": true
+    }
+  },
   "dependencies": {
-    "@antfu/eslint-config": "^5.0.0",
+    "@antfu/eslint-config": "^5.4.1",
     "eslint-plugin-perfectionist": "^4.15.0"
   },
   "devDependencies": {
-    "@yelaiii/prettier": "^0.0.4"
+    "@yelaiii/prettier": "^0.0.4",
+    "prettier": "^3.6.2"
   }
 }

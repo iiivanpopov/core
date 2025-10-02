@@ -16,52 +16,12 @@ const configGroups = {
       files: ['src/**/*.tsx'],
       ignores: ['**/main.tsx'],
       rules: {
-        'react-naming-convention/filename': ['error', 'PascalCase'],
         'react-hooks/exhaustive-deps': 'off'
-      }
-    },
-    {
-      files: ['src/**/utils/**/*.ts', 'src/**/helpers/**/*.ts'],
-      rules: {
-        'react-naming-convention/filename': ['error', 'camelCase']
       }
     }
   ],
 
   typescript: [
-    {
-      name: 'yelaiii/typescript-enhancements',
-      languageOptions: {
-        parserOptions: {
-          project: 'tsconfig.app.json',
-          tsconfigRootDir: process.cwd()
-        }
-      },
-      files: ['src/**/*.{ts,tsx}'],
-      ignores: ['**/*.d.ts', '**/*.config.*', '**/node_modules/**'],
-      rules: {
-        '@typescript-eslint/prefer-nullish-coalescing': 'error',
-        '@typescript-eslint/prefer-optional-chain': 'error',
-        '@typescript-eslint/prefer-readonly': 'error',
-        '@typescript-eslint/prefer-readonly-parameter-types': 'off',
-        '@typescript-eslint/no-explicit-any': 'off',
-        '@typescript-eslint/consistent-type-imports': [
-          'error',
-          {
-            prefer: 'type-imports',
-            disallowTypeAnnotations: false
-          }
-        ],
-        '@typescript-eslint/consistent-type-assertions': [
-          'error',
-          {
-            assertionStyle: 'as',
-            objectLiteralTypeAssertions: 'allow'
-          }
-        ],
-        'ts/consistent-type-definitions': ['error', 'interface']
-      }
-    },
     {
       name: 'yelaiii/typescript-basic',
       files: ['**/*.{ts,tsx}'],
@@ -251,7 +211,10 @@ const configGroups = {
   ]
 }
 
-/** @type {import('@yelaiii/eslint').ESLint} */
+/**
+ * @typedef { import('@antfu/eslint-config').OptionsConfig & import('@antfu/eslint-config').TypedFlatConfigItem } EslintOptions
+ */
+/** @type {(options?: EslintOptions, ...userConfigs: any[]) => any} */
 export const eslint = (options = {}, ...userConfigs) => {
   const {
     react = false,

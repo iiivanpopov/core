@@ -1,7 +1,9 @@
 declare module '@yelaiii/eslint' {
+  export type EslintOptions = import('@antfu/eslint-config').OptionsConfig &
+    import('@antfu/eslint-config').TypedFlatConfigItem
+
   export type ESLint = (
-    options?: import('@antfu/eslint-config').OptionsConfig &
-      import('@antfu/eslint-config').TypedFlatConfigItem,
+    options?: EslintOptions,
     ...userConfigs: import('@antfu/eslint-config').Awaitable<
       | import('@antfu/eslint-config').TypedFlatConfigItem
       | import('eslint-flat-config-utils').FlatConfigComposer<any, any>
